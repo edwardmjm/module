@@ -1,15 +1,16 @@
+template <class Type>
 struct ISAP {
-#define N 405
-#define M 500005
-#define INF 0x7FFFFFFF
+#define N 55
+#define M 10005
 
 	int n, S, T, e;
 	struct edge {
-		int x, y, c;
+		int x, y;
+		Type c;
 		edge *next, *op;
 	}g[M], *fa[N], *ls[N], *cur[N];
 	int d[N], num[N];
-	int ret;
+	Type ret;
 
 	void init(int _n, int _S, int _T) {
 		n = _n;
@@ -21,7 +22,7 @@ struct ISAP {
 		}
 	}
 
-	void addedge(int x, int y, int c) {
+	void addedge(int x, int y, Type c) {
 		g[e].x = x; g[e].y = y; g[e].c = c; g[e].op = &g[e + 1]; g[e].next = ls[x]; ls[x] = &g[e++];
 		g[e].x = y; g[e].y = x; g[e].c = 0; g[e].op = &g[e - 1]; g[e].next = ls[y]; ls[y] = &g[e++];
 	}
@@ -37,7 +38,7 @@ struct ISAP {
 	}
 
 	void aug() {
-		int nf = INF;
+		Type nf = numeric_limits <Type>::max();
 		for (int i = T; i != S; i = fa[i]->x) {
 			if (fa[i]->c < nf) {
 				nf = fa[i]->c;
@@ -50,7 +51,7 @@ struct ISAP {
 		}
 	}
 
-	int sap() {
+	Type sap() {
 		for (int i = 0; i < n; i++) {
 			d[i] = 0;
 			num[i] = 0;
@@ -88,5 +89,4 @@ struct ISAP {
 	}
 #undef N
 #undef M
-#undef INF
-}sap;
+};
