@@ -1,44 +1,16 @@
-#include <cstdio>
-#include <ctime>
-#include <cstring>
-#include <cstdlib>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <set>
-#include <map>
-using namespace std;
-#define rep(i,n) for (int i = 0; i < (int)(n); i++)
-#define iter(v) __typeof((v).end())
-#define foreach(it,v) for (iter(v) it = (v).begin(); it != (v).end(); it++)
-typedef long long ll;
-typedef pair <int, int> PII;
-typedef map <int, int> mii;
-typedef mii *miip;
-const int N = 100005;
-int n, m;
-int c[N], ans[N];
-vector <PII> Q[N];
-vector <int> E[N];
-
+/*  init null before everything.
+    For example: null = pool; null->size = 0; null->ch[0] = null->ch[1] = null;*/
+struct Node;
+Node *null;
 struct Node {
     Node *ch[2];
     int fix, key, size;
     void up();
-    int query(int);
-}pool[N * 20], *C = pool + 1, *null = pool;
+}pool[N * 20], *C = pool + 1;
 
 void Node::up() {
     if (this == null) return;
     size = ch[0]->size + ch[1]->size + 1;
-}
-
-int Node::query(int k) {
-    if (this == null) return 0;
-    if (key >= k)
-        return ch[0]->query(k) + 1 + ch[1]->size;
-    else
-        return ch[1]->query(k);
 }
 
 Node *newNode(int key) {
